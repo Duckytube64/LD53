@@ -10,7 +10,7 @@ public class Main : MonoBehaviour
     [SerializeField]
     PlayerController knight, frog;
     Transform knightT, frogT;
-
+    float throwForce = 100;
     bool frogGrabbed = false;
 
     // Start is called before the first frame update
@@ -32,6 +32,16 @@ public class Main : MonoBehaviour
                 DropFrog();
             else if (knight.isControlled && (knightT.position - frogT.position).magnitude < 0.75f)
                 GrabFrog();
+        }
+
+        // Throw frog
+        if (Input.GetMouseButtonDown(0) && frogGrabbed)
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
+            frog._currentHorizontalSpeed += diffN.x;
+            frog._currentVerticalSpeed += diffN.y;
+            DropFrog();
         }
     }
 

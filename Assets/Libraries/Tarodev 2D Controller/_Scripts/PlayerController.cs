@@ -20,7 +20,8 @@ namespace TarodevController {
         public bool Grounded => _colDown;
 
         private Vector3 _lastPosition;
-        private float _currentHorizontalSpeed, _currentVerticalSpeed;
+        [HideInInspector]
+        public float _currentHorizontalSpeed, _currentVerticalSpeed;
 
         // This is horrible, but for some reason colliders are not fully established when update starts...
         private bool _active;
