@@ -24,12 +24,13 @@ namespace TarodevController {
 
         // This is horrible, but for some reason colliders are not fully established when update starts...
         private bool _active;
-        public bool deactivated = false;
+        public bool isControlled = true, isKinematic = false;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
         
         private void Update() {
-            if(!_active) return;
+            if (!_active) return;
+            if (isKinematic) return;
             // Calculate velocity
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
@@ -49,7 +50,7 @@ namespace TarodevController {
         #region Gather Input
 
         private void GatherInput() {
-            if (deactivated)
+            if (!isControlled)
                 Input = new FrameInput { JumpDown = false, JumpUp = false, X = 0 };
             else
             {
