@@ -7,7 +7,7 @@ public class FollowCamera : MonoBehaviour
 {
     public Transform knight, frog;
     float camWeight = 0.5f; // 0 = on knight, 1 = on frog, in between is in between :^)
-    float camWeightTarget, camLerpSpeed = 1, minSpeed = 0.001f;
+    float camWeightTarget, camLerpSpeed = 7, minSpeed = 0.001f;
     CameraMode mode = CameraMode.WAverage;
 
     private void Start()

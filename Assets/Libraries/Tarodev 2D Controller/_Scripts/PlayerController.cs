@@ -24,11 +24,13 @@ namespace TarodevController {
 
         // This is horrible, but for some reason colliders are not fully established when update starts...
         private bool _active;
+        public bool deactivated = false;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
         
         private void Update() {
             if(!_active) return;
+            if (deactivated) return;
             // Calculate velocity
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
