@@ -76,8 +76,9 @@ public class Main : MonoBehaviour
             frogCon.transform.Find("Visual").Find("SpriteHolder").rotation = Quaternion.Euler(Vector3.zero);
             frogCon.enabled = true;
             frogCol.enabled = false;
-            isKnight = false;
         }
+        
+        isKnight = false;
     }
 
     void GrabFrog()
