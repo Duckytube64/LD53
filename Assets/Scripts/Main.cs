@@ -15,12 +15,12 @@ public class Main : MonoBehaviour
     {
         
     }
-    public bool a = false, b = false;
+
     // Update is called once per frame
     void Update()
     {
-        if (a) { ChangeToKnight(); a = false; }
-        else if (b) { ChangeToFrog();b = false; }
+        if (Input.GetKeyDown(KeyCode.Q)) ChangeToKnight();
+        else if (Input.GetKeyDown(KeyCode.E)) ChangeToFrog();
     }
 
     void ChangeToKnight()

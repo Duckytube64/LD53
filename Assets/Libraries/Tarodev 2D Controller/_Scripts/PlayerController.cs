@@ -30,7 +30,6 @@ namespace TarodevController {
         
         private void Update() {
             if(!_active) return;
-            if (deactivated) return;
             // Calculate velocity
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
@@ -50,13 +49,20 @@ namespace TarodevController {
         #region Gather Input
 
         private void GatherInput() {
-            Input = new FrameInput {
-                JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
-                JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-                X = UnityEngine.Input.GetAxisRaw("Horizontal")
-            };
-            if (Input.JumpDown) {
-                _lastJumpPressed = Time.time;
+            if (deactivated)
+                Input = new FrameInput { JumpDown = false, JumpUp = false, X = 0 };
+            else
+            {
+                Input = new FrameInput
+                {
+                    JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
+                    JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
+                    X = UnityEngine.Input.GetAxisRaw("Horizontal")
+                };
+                if (Input.JumpDown)
+                {
+                    _lastJumpPressed = Time.time;
+                }
             }
         }
 
