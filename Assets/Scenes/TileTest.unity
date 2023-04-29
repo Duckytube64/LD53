@@ -2460,8 +2460,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knight: {fileID: 2104932674}
   frog: {fileID: 1532219545}
-  knightWeight: 1
-  frogWeight: 1
+  camWeightTarget: 0
+  camLerpSpeed: 8
+  minSpeed: 0.002
 --- !u!1 &1532219543
 GameObject:
   m_ObjectHideFlags: 0
