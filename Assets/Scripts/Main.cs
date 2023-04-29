@@ -14,7 +14,8 @@ public class Main : MonoBehaviour
     CircleCollider2D frogCol;
 
     public float throwForce = 10;
-    bool frogGrabbed = false;
+    bool frogGrabbed = false, isKnight = true;
+    bool thrown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,15 +23,20 @@ public class Main : MonoBehaviour
         knightT = knightCon.gameObject.transform;
         frogT = frogCon.gameObject.transform;
         frogR = frogCon.gameObject.GetComponent<Rigidbody2D>();
-        frogCol = frogCon.gameObject.GetComponent<CircleCollider2D>();
+        frogCol = frogCon.transform.GetComponent<CircleCollider2D>();
         frogCol.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) ChangeToKnight();
-        else if (Input.GetKeyDown(KeyCode.E)) ChangeToFrog();
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (isKnight)
+                ChangeToFrog();
+            else
+                ChangeToKnight();
+        }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -50,6 +56,7 @@ public class Main : MonoBehaviour
         frogCon.isControlled = false;
         knightCon.isControlled = true;
         followCamera.SetCameraWeightTarget(0);
+        isKnight = true;
     }
 
     void ChangeToFrog()
@@ -59,12 +66,18 @@ public class Main : MonoBehaviour
         frogCon.isControlled = true;
         followCamera.SetCameraWeightTarget(1);
 
-        frogR.gravityScale = 0;
-        frogR.drag = 0;
-        //frogR.angularVelocity = Vector3.zero;
-        frogR.velocity = Vector3.zero;
-        frogCon.enabled = true;
-        frogCol.enabled = false;
+        if (thrown)
+        {
+            frogR.gravityScale = 0;
+            frogR.drag = 0;
+            frogR.angularVelocity = 0;
+            frogR.transform.rotation = Quaternion.Euler(Vector3.zero);
+            frogR.velocity = Vector3.zero;
+            frogCon.transform.Find("Visual").Find("SpriteHolder").rotation = Quaternion.Euler(Vector3.zero);
+            frogCon.enabled = true;
+            frogCol.enabled = false;
+            isKnight = false;
+        }
     }
 
     void GrabFrog()
@@ -93,5 +106,7 @@ public class Main : MonoBehaviour
         frogCol.enabled = true;
         DropFrog();
         frogR.AddForce(diffN);
+
+        thrown = true;
     }
 }
