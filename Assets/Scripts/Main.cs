@@ -1,8 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TarodevController;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+
+public struct HasItem
+{
+    public bool holdsItem;
+    public GameObject heldItem;
+}
 
 public class Main : MonoBehaviour
 {
@@ -11,22 +14,24 @@ public class Main : MonoBehaviour
     [SerializeField]
     PlayerController knightCon, frogCon;
     Transform knightT, frogT;
-    Rigidbody2D knightR, frogR;
+    Rigidbody2D frogR;
     CircleCollider2D frogCol;
+    HasItem knightI, frogI;
 
     public float throwForce = 50;
-    bool frogGrabbed = false, isKnight = true;
     bool thrown = false;
-    GameObject grabbedItem = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        knightI = new HasItem();
+        frogI = new HasItem();
         knightT = knightCon.gameObject.transform;
         frogT = frogCon.gameObject.transform;
         frogR = frogCon.gameObject.GetComponent<Rigidbody2D>();
         frogCol = frogCon.transform.GetComponent<CircleCollider2D>();
         frogCol.enabled = false;
+        frogCon.isFrog = true;
     }
 
     // Update is called once per frame
@@ -34,155 +39,175 @@ public class Main : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (isKnight)
+            if (knightCon.isControlled)
                 ChangeToFrog();
             else
                 ChangeToKnight();
         }
 
+        ref HasItem hi = ref knightI;
+        if (frogCon.isControlled) hi = ref frogI;
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (frogGrabbed)
+            if (knightCon.isControlled && hi.holdsItem && knightI.heldItem.name == "Frog")
                 DropFrog();
-            else if (grabbedItem)
-                DropItem();
+            else if (hi.holdsItem)
+                DropItem(ref hi);
             else
             {
                 var objs = GameObject.FindGameObjectsWithTag("Pick up");
                 float minDist = 1;
                 GameObject obj = null;
+                Vector3 pos;
+                if (knightCon.isControlled) pos = knightT.position;
+                else pos = frogT.position;
+
                 for (int i = 0; i < objs.Length; i++)
                 {
-                    float dist = (knightT.position - objs[i].transform.position).magnitude;
-                    if (knightCon.isControlled && dist < 0.75 && minDist > dist)
-                    {
-                        obj = objs[i];
-                        minDist = dist;
-                    }
+                    float dist = (pos - objs[i].transform.position).magnitude;
+                    if (!(frogCon.isControlled && objs[i].name == "Frog"))
+                        if (dist < 0.75 && minDist > dist)
+                        {
+                            obj = objs[i];
+                            minDist = dist;
+                        }
                 }
                 if (obj)
                 {
-                    if (obj.name == "Frog")
+                    if (obj.name == "Frog" && !frogI.holdsItem)
                         GrabFrog();
                     else
-                        GrabItem(obj);
+                        GrabItem(obj, ref hi);
                 }
             }
         }
 
         // Throw stuff
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && knightCon.isControlled)
         {
-            if (frogGrabbed)
-                ThrowFrog();
-            else if (grabbedItem && !frogCon.isControlled)
-                ThrowItem();
+            if (hi.holdsItem)
+            {
+                if (hi.heldItem.name == "Frog")
+                    ThrowFrog();
+                else
+                    ThrowItem();
+            }
         }
-    }
 
-    void ChangeToKnight()
-    {
-        frogCon.isControlled = false;
-        knightCon.isControlled = true;
-        followCamera.SetCameraWeightTarget(0);
-        isKnight = true;
-    }
-
-    void ChangeToFrog()
-    {
-        if (frogGrabbed) return;
-        knightCon.isControlled = false;
-        frogCon.isControlled = true;
-        followCamera.SetCameraWeightTarget(1);
-
-        RBDisable();
-        
-        isKnight = false;
-    }
-
-    void RBEnable()
-    {
-        if (!thrown)
+        void ChangeToKnight()
         {
-            frogR.gravityScale = 2;
-            frogR.drag = 1.5f;
-            frogCon.enabled = false;
-            frogCol.enabled = true;
+            frogCon.isControlled = false;
+            knightCon.isControlled = true;
+            followCamera.SetCameraWeightTarget(0);
         }
-    }
 
-    void RBDisable()
-    {
-        if (thrown)
+        void ChangeToFrog()
         {
-            frogR.gravityScale = 0;
-            frogR.drag = 0;
-            frogR.angularVelocity = 0;
-            frogR.transform.rotation = Quaternion.Euler(Vector3.zero);
-            frogR.velocity = Vector3.zero;
-            frogCon.transform.Find("Visual").Find("SpriteHolder").rotation = Quaternion.Euler(Vector3.zero);
-            frogCon.enabled = true;
-            frogCol.enabled = false;
-            thrown = false;
+            if (knightI.holdsItem && knightI.heldItem.name == "Frog") return;
+            knightCon.isControlled = false;
+            frogCon.isControlled = true;
+            followCamera.SetCameraWeightTarget(1);
+
+            RBDisable();
         }
-    }
 
-    void GrabItem(GameObject g)
-    {
-        g.GetComponent<Rigidbody2D>().isKinematic = true;
+        void RBEnable()
+        {
+            if (!thrown)
+            {
+                frogR.gravityScale = 2;
+                frogR.drag = 1.5f;
+                frogCon.enabled = false;
+                frogCol.enabled = true;
+            }
+        }
 
-        g.transform.parent = knightT;
-        g.transform.localPosition = Vector3.zero;
-        grabbedItem = g;
-    }
+        void RBDisable()
+        {
+            if (thrown)
+            {
+                frogR.gravityScale = 0;
+                frogR.drag = 0;
+                frogR.angularVelocity = 0;
+                frogR.transform.rotation = Quaternion.Euler(Vector3.zero);
+                frogR.velocity = Vector3.zero;
+                frogCon.transform.Find("Visual").Find("SpriteHolder").rotation = Quaternion.Euler(Vector3.zero);
+                frogCon.enabled = true;
+                frogCol.enabled = false;
+                thrown = false;
+            }
+        }
 
-    void GrabFrog()
-    {
-        RBDisable();
+        void GrabItem(GameObject g, ref HasItem hi)
+        {
+            if (frogI.heldItem == g || knightI.heldItem == g) return;
 
-        frogT.parent = knightT;
-        frogT.localPosition = Vector3.zero;
-        frogCon.isKinematic = true;
-        frogGrabbed = true;
-    }
+            g.GetComponent<Rigidbody2D>().isKinematic = true;
 
-    void DropItem()
-    {
-        if (!grabbedItem) return;
+            if (knightCon.isControlled)
+            {
+                g.transform.parent = knightT.Find("Visual");
+                g.transform.localPosition = new Vector3(0.2f, 0, 0);
+            }
+            else if (frogCon.isControlled)
+            {
+                g.transform.parent = frogT.Find("Visual");
+                g.transform.localPosition = new Vector3(0, 0.2f, 0);
+            }
+            hi.holdsItem = true;
+            hi.heldItem = g;
+        }
 
-        grabbedItem.transform.parent = null;
-        grabbedItem.GetComponent<Rigidbody2D>().isKinematic = false;
-        grabbedItem = null;
-    }
+        void GrabFrog()
+        {
+            RBDisable();
 
-    void DropFrog()
-    {
-        frogT.parent = GameObject.Find("Player characters").transform;
-        frogCon.isKinematic = false;
-        frogGrabbed = false;
-    }
+            frogT.parent = knightT;
+            frogT.localPosition = Vector3.zero;
+            frogCon.isKinematic = true;
+            knightI.holdsItem = true;
+            knightI.heldItem = frogT.gameObject;
+        }
 
-    void ThrowItem()
-    {
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        worldPosition.z = 0;
-        Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
-        GameObject tmp = grabbedItem;
-        DropItem();
-        tmp.GetComponent<Rigidbody2D>().AddForce(diffN);
+        void DropItem(ref HasItem hi)
+        {
+            hi.heldItem.transform.parent = null;
+            hi.heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
+            hi.holdsItem = false;
+            hi.heldItem = null;
+        }
 
-        thrown = true;
-    }
+        void DropFrog()
+        {
+            frogT.parent = GameObject.Find("Player characters").transform;
+            frogCon.isKinematic = false;
+            knightI.holdsItem = false;
+            knightI.heldItem = null;
+        }
 
-    void ThrowFrog()
-    {
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        worldPosition.z = 0;
-        Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
-        RBEnable();
-        DropFrog();
-        frogR.AddForce(diffN);
+        void ThrowItem()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0;
+            Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
+            GameObject tmp = knightI.heldItem;
+            DropItem(ref knightI);
+            tmp.GetComponent<Rigidbody2D>().AddForce(diffN);
 
-        thrown = true;
+            thrown = true;
+        }
+
+        void ThrowFrog()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0;
+            Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
+            RBEnable();
+            DropFrog();
+            frogR.AddForce(diffN);
+
+            thrown = true;
+        }
     }
 }

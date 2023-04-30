@@ -25,7 +25,7 @@ namespace TarodevController {
 
         // This is horrible, but for some reason colliders are not fully established when update starts...
         private bool _active;
-        public bool isControlled = true, isKinematic = false;
+        public bool isControlled = true, isKinematic = false, isFrog = false;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
         
@@ -57,11 +57,11 @@ namespace TarodevController {
             {
                 Input = new FrameInput
                 {
-                    JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
-                    JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
+                    JumpDown = isFrog ? false : UnityEngine.Input.GetButtonDown("Jump"),
+                    JumpUp = isFrog ? false : UnityEngine.Input.GetButtonUp("Jump"),
                     X = UnityEngine.Input.GetAxisRaw("Horizontal")
                 };
-                if (Input.JumpDown)
+                if (!isFrog && Input.JumpDown)
                 {
                     _lastJumpPressed = Time.time;
                 }
