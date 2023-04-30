@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerConnect : MonoBehaviour
 {
     public Rigidbody2D rb;
     public HingeJoint2D hj;
@@ -27,13 +27,13 @@ public class Player : MonoBehaviour
     {
         Vector3 go = new Vector3(1, 0, 0);
         Vector3 goback = new Vector3(-1, 0, 0);
-        if (this.tag == "Knight")
+        if (this.tag == "Frog")
         {
             if (Input.GetKey("d"))
             {
                 if (attached)
                 {
-                    rb.transform.position += new Vector3(1,0,0);
+                    rb.transform.position += new Vector3(1, 0, 0);
                     //rb.AddRelativeForce(go * pushForce);
                 }
             }
@@ -57,14 +57,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         UnityEngine.Debug.Log(col);
-        if (this.tag == "Knight")
-        {
-            Attach(col.gameObject.GetComponent<Rigidbody2D>());
-        }
-        else
-        {
-            Attach(col.gameObject.GetComponent<Rigidbody2D>());
-        }
-        
+        Attach(col.gameObject.GetComponent<Rigidbody2D>());
+
     }
 }
