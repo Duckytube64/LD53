@@ -15,6 +15,8 @@ public class WalkingEnemy : MonoBehaviour
     {
         wall_detector = transform.GetChild(0).GetComponent<Collider2D>();
         FlipSprite();
+        wall1.GetComponent<SpriteRenderer>().enabled = false;
+        wall2.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void Update()

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6374759557263931411}
   - component: {fileID: 6374759557263931413}
   - component: {fileID: 6374759557263931412}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Key
   m_TagString: Pick up
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6374759557263931408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 741805072, guid: 00ef9132099a7ed47a6756d260ff5d38, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7fd2484693a38040a1e31a545959a35, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
