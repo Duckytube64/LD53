@@ -13,7 +13,7 @@ public class Main : MonoBehaviour
     Rigidbody2D knightR, frogR;
     CircleCollider2D frogCol;
 
-    public float throwForce = 10;
+    public float throwForce = 50;
     bool frogGrabbed = false, isKnight = true;
     bool thrown = false;
 
@@ -66,6 +66,24 @@ public class Main : MonoBehaviour
         frogCon.isControlled = true;
         followCamera.SetCameraWeightTarget(1);
 
+        RBDisable();
+        
+        isKnight = false;
+    }
+
+    void RBEnable()
+    {
+        if (!thrown)
+        {
+            frogR.gravityScale = 2;
+            frogR.drag = 1.5f;
+            frogCon.enabled = false;
+            frogCol.enabled = true;
+        }
+    }
+
+    void RBDisable()
+    {
         if (thrown)
         {
             frogR.gravityScale = 0;
@@ -76,13 +94,14 @@ public class Main : MonoBehaviour
             frogCon.transform.Find("Visual").Find("SpriteHolder").rotation = Quaternion.Euler(Vector3.zero);
             frogCon.enabled = true;
             frogCol.enabled = false;
+            thrown = false;
         }
-        
-        isKnight = false;
     }
 
     void GrabFrog()
     {
+        RBDisable();
+
         frogT.parent = knightT;
         frogT.localPosition = Vector3.zero;
         frogCon.isKinematic = true;
@@ -101,10 +120,7 @@ public class Main : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPosition.z = 0;
         Vector3 diffN = (worldPosition - knightT.position).normalized * throwForce;
-        frogR.gravityScale = 2;
-        frogR.drag = 1.5f;
-        frogCon.enabled = false;
-        frogCol.enabled = true;
+        RBEnable();
         DropFrog();
         frogR.AddForce(diffN);
 
