@@ -117,14 +117,15 @@ namespace TarodevController {
                     if (hit.collider)
                     {
                         if (hit.collider.CompareTag("Bounce"))
-                            _currentVerticalSpeed *= -1;
-                        return true;
+                            _currentVerticalSpeed = Mathf.Max(_currentVerticalSpeed * -1, tmp);
+                        else
+                            return true;
                     }
                 }
                 return false;
             }
         }
-
+        public float tmp = 35;
         private void CalculateRayRanged() {
             // This is crying out for some kind of refactor. 
             var b = new Bounds(transform.position, _characterBounds.size);
