@@ -7,6 +7,8 @@ TagManager:
   - Knight
   - Enemy
   - Pick up
+  - Bounce
+  - Bounce enemy
   layers:
   - Default
   - TransparentFX

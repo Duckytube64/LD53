@@ -47,7 +47,6 @@ namespace TarodevController {
             MoveCharacter(); // Actually perform the axis movement
         }
 
-
         #region Gather Input
 
         private void GatherInput() {
@@ -90,7 +89,7 @@ namespace TarodevController {
 
             // Ground
             LandingThisFrame = false;
-            var groundedCheck = RunDetection(_raysDown);
+            var groundedCheck = RunDetectionDown(_raysDown);
             if (_colDown && !groundedCheck) _timeLeftGrounded = Time.time; // Only trigger when first leaving
             else if (!_colDown && groundedCheck) {
                 _coyoteUsable = true; // Only trigger when first touching
@@ -106,6 +105,23 @@ namespace TarodevController {
 
             bool RunDetection(RayRange range) {
                 return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer));
+            }
+
+            bool RunDetectionDown(RayRange range)
+            {
+                var en = EvaluateRayPositions(range);
+                foreach (var point in en) 
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer);
+
+                    if (hit.collider)
+                    {
+                        if (hit.collider.CompareTag("Bounce"))
+                            _currentVerticalSpeed *= -1;
+                        return true;
+                    }
+                }
+                return false;
             }
         }
 
