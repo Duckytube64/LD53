@@ -40,9 +40,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1906692815350045220}
     m_Modifications:
+    - target: {fileID: 7140773965964132668, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140773965964132669, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -861760788, guid: 1f13c408c2ebd064db0ad8d2121a51d3, type: 3}
     - target: {fileID: 7140773967324492773, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140773967324492773, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140773967324492773, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7140773967324492773, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87,6 +103,14 @@ PrefabInstance:
     - target: {fileID: 7140773967324492774, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140773967324492775, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: _characterBounds.m_Extent.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140773967324492775, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
+      propertyPath: _characterBounds.m_Extent.y
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
