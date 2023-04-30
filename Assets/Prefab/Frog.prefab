@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4521903611954715598}
   - component: {fileID: 4521903611954715596}
   - component: {fileID: 4521903611954715599}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Launch Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +4881,7 @@ GameObject:
   - component: {fileID: 4521903612276649690}
   - component: {fileID: 4521903612276649688}
   - component: {fileID: 4521903612276649691}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jump Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9750,7 +9750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4521903612565917517}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9786,7 +9786,7 @@ GameObject:
   - component: {fileID: 4521903612760922074}
   - component: {fileID: 4521903612760922072}
   - component: {fileID: 4521903612760922075}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Land Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14656,7 +14656,7 @@ GameObject:
   - component: {fileID: 4521903612885820805}
   - component: {fileID: 4521903612885820803}
   - component: {fileID: 4521903612885820802}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Move Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19466,7 +19466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2709687303235480763}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19500,7 +19500,7 @@ GameObject:
   - component: {fileID: 7459157211080623125}
   - component: {fileID: 7459157211080623124}
   - component: {fileID: 4521903613282863605}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19607,9 +19607,9 @@ GameObject:
   - component: {fileID: 7459157211904538318}
   - component: {fileID: 4521903613546374747}
   - component: {fileID: 4521903613546374746}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Frog
-  m_TagString: Untagged
+  m_TagString: Pick up
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19646,12 +19646,13 @@ MonoBehaviour:
   _currentVerticalSpeed: 0
   isControlled: 0
   isKinematic: 0
+  isFrog: 1
   _characterBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   _detectorCount: 3
   _detectionRayLength: 0.1
   _rayBuffer: 0.1
@@ -19717,7 +19718,7 @@ GameObject:
   - component: {fileID: 4495437688536056312}
   - component: {fileID: 4521903612999504894}
   - component: {fileID: 8336194527950048232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
