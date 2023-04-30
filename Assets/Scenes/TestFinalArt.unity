@@ -313,7 +313,7 @@ MonoBehaviour:
   followCamera: {fileID: 853323202}
   knightCon: {fileID: 387913346}
   frogCon: {fileID: 160876962}
-  throwForce: 10
+  throwForce: 50
 --- !u!4 &502594531
 Transform:
   m_ObjectHideFlags: 0
