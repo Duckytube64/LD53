@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4205263092348231852}
   - component: {fileID: 4205263092348231850}
   - component: {fileID: 4205263092348231851}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Move Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 4205263092504646387}
   - component: {fileID: 4205263092504646385}
   - component: {fileID: 4205263092504646386}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Land Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9691,7 +9691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4205263092699581028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9727,7 +9727,7 @@ GameObject:
   - component: {fileID: 4205263092955311091}
   - component: {fileID: 4205263092955311089}
   - component: {fileID: 4205263092955311090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Jump Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14598,7 +14598,7 @@ GameObject:
   - component: {fileID: 4205263093312954087}
   - component: {fileID: 4205263093312954085}
   - component: {fileID: 4205263093312954086}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Launch Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19466,7 +19466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2380048906522978706}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpriteHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19500,7 +19500,7 @@ GameObject:
   - component: {fileID: 7140773965964132668}
   - component: {fileID: 7140773965964132669}
   - component: {fileID: 4205263094095580380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19605,9 +19605,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7140773967324492773}
   - component: {fileID: 7140773967324492775}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Knight
-  m_TagString: Untagged
+  m_TagString: Knight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19644,12 +19644,13 @@ MonoBehaviour:
   _currentVerticalSpeed: 0
   isControlled: 1
   isKinematic: 0
+  isFrog: 0
   _characterBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.65, z: 0}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   _detectorCount: 3
   _detectionRayLength: 0.1
   _rayBuffer: 0.1
@@ -19678,7 +19679,7 @@ GameObject:
   - component: {fileID: 4250869332327728337}
   - component: {fileID: 4205263094345324247}
   - component: {fileID: 8587523507651595969}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
