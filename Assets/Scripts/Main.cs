@@ -95,6 +95,8 @@ public class Main : MonoBehaviour
         frogGrabbed = false;
     }
 
+
+
     void ThrowFrog()
     {
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
