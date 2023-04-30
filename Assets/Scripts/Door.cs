@@ -11,8 +11,9 @@ public class Door : MonoBehaviour
     {
         if(col.gameObject == key)
         {
-            transform.gameObject.layer = 7;
+            transform.gameObject.layer = 1;
             transform.gameObject.GetComponent<SpriteRenderer>().sprite = open;
+            Destroy(key);
         }
     }
 }
