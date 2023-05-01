@@ -1,6 +1,7 @@
 using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public struct HasItem
 {
@@ -21,6 +22,7 @@ public class Main : MonoBehaviour
 
     public float throwForce = 50;
     bool thrown = false;
+    TrailRenderer trail;
 
     void Start()
     {
@@ -32,6 +34,9 @@ public class Main : MonoBehaviour
         frogCol = frogCon.transform.GetComponent<CircleCollider2D>();
         frogCol.enabled = false;
         frogCon.isFrog = true;
+
+        trail = frogT.Find("Visual").GetComponent<TrailRenderer>();
+        trail.enabled = false;
     }
 
     void Update()
@@ -112,6 +117,7 @@ public class Main : MonoBehaviour
             followCamera.SetCameraWeightTarget(1);
 
             RBDisable();
+            trail.enabled = false;
         }
 
         void RBEnable()
@@ -144,8 +150,11 @@ public class Main : MonoBehaviour
         void GrabItem(GameObject g, ref HasItem hi)
         {
             if (frogI.heldItem == g || knightI.heldItem == g) return;
-
-            g.GetComponent<Rigidbody2D>().isKinematic = true;
+            Rigidbody2D r = g.GetComponent<Rigidbody2D>();
+            r.isKinematic = true;
+            r.velocity = Vector3.zero;
+            r.angularVelocity = 0;
+            g.transform.rotation = Quaternion.Euler(Vector3.zero);
 
             if (knightCon.isControlled)
             {
@@ -159,6 +168,7 @@ public class Main : MonoBehaviour
             }
             hi.holdsItem = true;
             hi.heldItem = g;
+            g.GetComponent<TrailRenderer>().enabled = false;
         }
 
         void GrabFrog()
@@ -170,6 +180,7 @@ public class Main : MonoBehaviour
             frogCon.isKinematic = true;
             knightI.holdsItem = true;
             knightI.heldItem = frogT.gameObject;
+            trail.enabled = false;
         }
 
         void DropItem(ref HasItem hi)
@@ -177,6 +188,7 @@ public class Main : MonoBehaviour
             hi.heldItem.transform.parent = null;
             hi.heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
             hi.holdsItem = false;
+            hi.heldItem.GetComponent<TrailRenderer>().enabled = false;
             hi.heldItem = null;
         }
 
@@ -198,6 +210,7 @@ public class Main : MonoBehaviour
             tmp.GetComponent<Rigidbody2D>().AddForce(diffN);
 
             thrown = true;
+            tmp.GetComponent<TrailRenderer>().enabled = true;
         }
 
         void ThrowFrog()
@@ -210,6 +223,7 @@ public class Main : MonoBehaviour
             frogR.AddForce(diffN);
 
             thrown = true;
+            trail.enabled = true;
         }
     }
 }

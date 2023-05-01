@@ -7,7 +7,8 @@ namespace TarodevController {
     /// You won't find any programming prowess here.
     /// This is a supplementary script to help with effects and animation. Basically a juice factory.
     /// </summary>
-    public class PlayerAnimator : MonoBehaviour {
+    public class PlayerAnimator : MonoBehaviour
+    {
         [SerializeField] private Animator _anim;
         [SerializeField] private AudioSource _source;
         [SerializeField] private LayerMask _groundMask;
@@ -27,7 +28,8 @@ namespace TarodevController {
         void Awake() => _player = GetComponentInParent<IPlayerController>();
         float rotateSpeed = 25;
         [SerializeField] bool isFrog = false;
-        void Update() {
+        void Update()
+        {
             if (_player == null) return;
 
             // Flip the sprite
@@ -89,15 +91,20 @@ namespace TarodevController {
             //_movement = _player.RawMovement; // Previous frame movement is more valuable
         }
 
-        private void OnDisable() {
-            _moveParticles.Stop();
+        private void OnDisable()
+        {
+            if (!isFrog)
+                _moveParticles.Stop();
         }
 
-        private void OnEnable() {
-            _moveParticles.Play();
+        private void OnEnable()
+        {
+            if (!isFrog)
+                _moveParticles.Play();
         }
 
-        void SetColor(ParticleSystem ps) {
+        void SetColor(ParticleSystem ps)
+        {
             var main = ps.main;
             main.startColor = _currentGradient;
         }
