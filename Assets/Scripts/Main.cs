@@ -1,7 +1,5 @@
 using TarodevController;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public struct HasItem
 {
@@ -22,8 +20,8 @@ public class Main : MonoBehaviour
 
     public float throwForce = 50;
     bool thrown = false;
-    TrailRenderer trail;
 
+    // Start is called before the first frame update
     void Start()
     {
         knightI = new HasItem();
@@ -34,21 +32,11 @@ public class Main : MonoBehaviour
         frogCol = frogCon.transform.GetComponent<CircleCollider2D>();
         frogCol.enabled = false;
         frogCon.isFrog = true;
-
-        trail = frogT.Find("Visual").GetComponent<TrailRenderer>();
-        trail.enabled = false;
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (knightCon.isControlled)
@@ -79,7 +67,7 @@ public class Main : MonoBehaviour
                 {
                     float dist = (pos - objs[i].transform.position).magnitude;
                     if (!(frogCon.isControlled && objs[i].name == "Frog"))
-                        if (dist < 1 && minDist > dist)
+                        if (dist < 0.75 && minDist > dist)
                         {
                             obj = objs[i];
                             minDist = dist;
@@ -122,7 +110,6 @@ public class Main : MonoBehaviour
             followCamera.SetCameraWeightTarget(1);
 
             RBDisable();
-            trail.enabled = false;
         }
 
         void RBEnable()
@@ -155,11 +142,8 @@ public class Main : MonoBehaviour
         void GrabItem(GameObject g, ref HasItem hi)
         {
             if (frogI.heldItem == g || knightI.heldItem == g) return;
-            Rigidbody2D r = g.GetComponent<Rigidbody2D>();
-            r.isKinematic = true;
-            r.velocity = Vector3.zero;
-            r.angularVelocity = 0;
-            g.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+            g.GetComponent<Rigidbody2D>().isKinematic = true;
 
             if (knightCon.isControlled)
             {
@@ -173,7 +157,6 @@ public class Main : MonoBehaviour
             }
             hi.holdsItem = true;
             hi.heldItem = g;
-            g.GetComponent<TrailRenderer>().enabled = false;
         }
 
         void GrabFrog()
@@ -185,7 +168,6 @@ public class Main : MonoBehaviour
             frogCon.isKinematic = true;
             knightI.holdsItem = true;
             knightI.heldItem = frogT.gameObject;
-            trail.enabled = false;
         }
 
         void DropItem(ref HasItem hi)
@@ -193,7 +175,6 @@ public class Main : MonoBehaviour
             hi.heldItem.transform.parent = null;
             hi.heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
             hi.holdsItem = false;
-            hi.heldItem.GetComponent<TrailRenderer>().enabled = false;
             hi.heldItem = null;
         }
 
@@ -215,7 +196,6 @@ public class Main : MonoBehaviour
             tmp.GetComponent<Rigidbody2D>().AddForce(diffN);
 
             thrown = true;
-            tmp.GetComponent<TrailRenderer>().enabled = true;
         }
 
         void ThrowFrog()
@@ -228,7 +208,6 @@ public class Main : MonoBehaviour
             frogR.AddForce(diffN);
 
             thrown = true;
-            trail.enabled = true;
         }
     }
 }
