@@ -1,5 +1,6 @@
 using TarodevController;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public struct HasItem
 {
@@ -21,7 +22,6 @@ public class Main : MonoBehaviour
     public float throwForce = 50;
     bool thrown = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         knightI = new HasItem();
@@ -34,9 +34,11 @@ public class Main : MonoBehaviour
         frogCon.isFrog = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (knightCon.isControlled)
@@ -67,7 +69,7 @@ public class Main : MonoBehaviour
                 {
                     float dist = (pos - objs[i].transform.position).magnitude;
                     if (!(frogCon.isControlled && objs[i].name == "Frog"))
-                        if (dist < 0.75 && minDist > dist)
+                        if (dist < 1 && minDist > dist)
                         {
                             obj = objs[i];
                             minDist = dist;
