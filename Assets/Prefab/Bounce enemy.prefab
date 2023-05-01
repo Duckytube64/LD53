@@ -418,6 +418,7 @@ MonoBehaviour:
   speed: 3
   wall1: {fileID: 4883377865562747405}
   wall2: {fileID: 4883377865811422805}
+  bounce: 1
 --- !u!61 &4883377866530423081
 BoxCollider2D:
   m_ObjectHideFlags: 0
