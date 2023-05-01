@@ -10136,7 +10136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4883377865562747507, guid: b5987748496678d479778d3a18a6235a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.69
+      value: -3.53
       objectReference: {fileID: 0}
     - target: {fileID: 4883377865811422808, guid: b5987748496678d479778d3a18a6235a, type: 3}
       propertyPath: m_Layer
@@ -15162,7 +15162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7140773967324492774, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Knight
       objectReference: {fileID: 0}
     - target: {fileID: 7140773967324492775, guid: f2ce9da971b31bb43810578ddab01a06, type: 3}
       propertyPath: tmp
