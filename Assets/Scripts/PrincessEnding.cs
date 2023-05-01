@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,8 @@ public class PrincessEnding : MonoBehaviour
         {
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             prince.GetComponent<SpriteRenderer>().enabled = true;
-            Destroy(col.gameObject);
+            col.gameObject.transform.Find("Visual").gameObject.SetActive(false);
+            col.gameObject.GetComponent<PlayerController>().isControlled = false;
             text.GetComponent<Canvas>().enabled = true;
         }
     }
