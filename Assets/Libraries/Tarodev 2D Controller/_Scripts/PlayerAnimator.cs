@@ -98,8 +98,6 @@ namespace TarodevController {
                 {
                     Vector3 velocity = transform.parent.GetComponent<Rigidbody2D>().velocity;
                     float sum = Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y);
-                    Debug.Log(sum);
-                    Debug.Log(velocity);
                     if (col.gameObject.name == "Enemy Controller" && sum > 2f)
                     {
                         Destroy(col.gameObject);
