@@ -91,6 +91,23 @@ namespace TarodevController {
             //_movement = _player.RawMovement; // Previous frame movement is more valuable
         }
 
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (isFrog)
+                if (col.gameObject.GetComponent<Rigidbody2D>() != null)
+                {
+                    Vector3 velocity = transform.parent.GetComponent<Rigidbody2D>().velocity;
+                    float sum = Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y);
+                    Debug.Log(sum);
+                    Debug.Log(velocity);
+                    if (col.gameObject.name == "Enemy Controller" && sum > 2f)
+                    {
+                        Destroy(col.gameObject);
+                        transform.parent.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                    }
+                }
+        }
+
         private void OnDisable()
         {
             if (!isFrog)
