@@ -7,7 +7,8 @@ namespace TarodevController {
     /// You won't find any programming prowess here.
     /// This is a supplementary script to help with effects and animation. Basically a juice factory.
     /// </summary>
-    public class PlayerAnimator : MonoBehaviour {
+    public class PlayerAnimator : MonoBehaviour
+    {
         [SerializeField] private Animator _anim;
         [SerializeField] private AudioSource _source;
         [SerializeField] private LayerMask _groundMask;
@@ -25,24 +26,22 @@ namespace TarodevController {
         private Vector2 _movement;
 
         void Awake() => _player = GetComponentInParent<IPlayerController>();
-        [SerializeField] float rotateSpeed = 200;
+        float rotateSpeed = 25;
         [SerializeField] bool isFrog = false;
-
-        void Update() {
+        void Update()
+        {
             if (_player == null) return;
 
             // Flip the sprite
-            if (!isFrog && _player.Input.X != 0)
-            {
-                transform.localScale = new Vector3(_player.Input.X > 0 ? 1 : -1, 1, 1);
-            }
+            if (!isFrog && _player.Input.X != 0) transform.localScale = new Vector3(_player.Input.X > 0 ? 1 : -1, 1, 1);
+
             if (isFrog)
             {
-                Vector3 extraRotate = _player.Input.X * -rotateSpeed * new Vector3(0, 0, Time.deltaTime);
+                float frogSpeed = transform.parent.GetComponent<PlayerController>()._currentHorizontalSpeed;
+                Vector3 extraRotate = frogSpeed * -rotateSpeed * new Vector3(0, 0, Time.deltaTime);
                 Vector3 newRotation = _anim.transform.rotation.eulerAngles + extraRotate;
                 _anim.transform.parent.transform.rotation = Quaternion.Euler(newRotation);
             }
-   
             //// Lean while running
             //var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));
             //_anim.transform.rotation = Quaternion.RotateTowards(_anim.transform.rotation, Quaternion.Euler(targetRotVector), _tiltSpeed * Time.deltaTime);
@@ -92,15 +91,20 @@ namespace TarodevController {
             //_movement = _player.RawMovement; // Previous frame movement is more valuable
         }
 
-        private void OnDisable() {
-            _moveParticles.Stop();
+        private void OnDisable()
+        {
+            if (!isFrog)
+                _moveParticles.Stop();
         }
 
-        private void OnEnable() {
-            _moveParticles.Play();
+        private void OnEnable()
+        {
+            if (!isFrog)
+                _moveParticles.Play();
         }
 
-        void SetColor(ParticleSystem ps) {
+        void SetColor(ParticleSystem ps)
+        {
             var main = ps.main;
             main.startColor = _currentGradient;
         }

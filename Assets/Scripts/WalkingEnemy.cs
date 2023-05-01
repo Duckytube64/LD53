@@ -17,6 +17,7 @@ public class WalkingEnemy : MonoBehaviour
         FlipSprite();
         wall1.GetComponent<SpriteRenderer>().enabled = false;
         wall2.GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
     void Update()

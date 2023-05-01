@@ -18,9 +18,7 @@ namespace TarodevController {
         public bool LandingThisFrame { get; private set; }
         public Vector3 RawMovement { get; private set; }
         public bool Grounded => _colDown;
-        private Animator animator;
-        private Transform sprite;
-        
+
         private Vector3 _lastPosition;
         [HideInInspector]
         public float _currentHorizontalSpeed, _currentVerticalSpeed;
@@ -30,21 +28,8 @@ namespace TarodevController {
         public bool isControlled = true, isKinematic = false, isFrog = false;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
-        void Start()
-        {
-            Transform[] children = this.gameObject.transform.GetComponentsInChildren<Transform>();
-            foreach (var child in children)
-            {
-                if (child.name == "Sprite")
-                {
-                    animator = child.GetComponent<Animator>();
-                }
-            }
-        }
-
-
+        
         private void Update() {
-
             if (!_active) return;
             if (isKinematic) return;
             // Calculate velocity
@@ -61,7 +46,6 @@ namespace TarodevController {
 
             MoveCharacter(); // Actually perform the axis movement
         }
-
 
         #region Gather Input
 
@@ -105,7 +89,7 @@ namespace TarodevController {
 
             // Ground
             LandingThisFrame = false;
-            var groundedCheck = RunDetection(_raysDown);
+            var groundedCheck = RunDetectionDown(_raysDown);
             if (_colDown && !groundedCheck) _timeLeftGrounded = Time.time; // Only trigger when first leaving
             else if (!_colDown && groundedCheck) {
                 _coyoteUsable = true; // Only trigger when first touching
@@ -122,6 +106,40 @@ namespace TarodevController {
             bool RunDetection(RayRange range) {
                 return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer));
             }
+
+            bool RunDetectionDown(RayRange range)
+            {
+                var en = EvaluateRayPositions(range);
+                foreach (var point in en) 
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer);
+
+                    if (hit.collider)
+                    {
+                        if (hit.collider.CompareTag("Bounce"))
+                        {
+                            _currentVerticalSpeed = 40;
+                            _endedJumpEarly = true;
+                        }
+                        else
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (isFrog)
+                if (collision.collider.CompareTag("Bounce"))
+                {
+                    Rigidbody2D r = GetComponent<Rigidbody2D>();
+                    Vector2 v = r.velocity;
+                    v.y = Mathf.Max(Mathf.Abs(v.y), 15);
+                    v.x *= 1.2f;
+                    r.velocity = v;
+                }
         }
 
         private void CalculateRayRanged() {
@@ -187,18 +205,15 @@ namespace TarodevController {
                 // Apply bonus at the apex of a jump
                 var apexBonus = Mathf.Sign(Input.X) * _apexBonus * _apexPoint;
                 _currentHorizontalSpeed += apexBonus * Time.deltaTime;
-                
             }
             else {
                 // No input. Let's slow the character down
                 _currentHorizontalSpeed = Mathf.MoveTowards(_currentHorizontalSpeed, 0, _deAcceleration * Time.deltaTime);
-                
             }
 
             if (_currentHorizontalSpeed > 0 && _colRight || _currentHorizontalSpeed < 0 && _colLeft) {
                 // Don't walk through walls
                 _currentHorizontalSpeed = 0;
-                animator.SetBool("IsWalking", false);
             }
         }
 
@@ -290,28 +305,6 @@ namespace TarodevController {
         private void MoveCharacter() {
             var pos = transform.position;
             RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
-            if (Mathf.Abs(RawMovement.x) > 0.1)
-            {
-                if (this.tag == "Knight")
-                {
-                    animator.SetBool("IsWalking", true);
-                }
-                if (this.tag == "Pick up")
-                {
-                    animator.SetBool("IsFrog", true);
-                }
-            }
-            else
-            {
-                if (this.tag == "Knight")
-                {
-                    animator.SetBool("IsWalking", false);
-                }
-                if (this.tag == "Pick up")
-                {
-                    animator.SetBool("IsFrog", false);
-                }
-            }
             var move = RawMovement * Time.deltaTime;
             var furthestPoint = pos + move;
 
