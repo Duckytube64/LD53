@@ -18,6 +18,7 @@ namespace TarodevController {
         public bool LandingThisFrame { get; private set; }
         public Vector3 RawMovement { get; private set; }
         public bool Grounded => _colDown;
+        private Animator animator;
 
         private Vector3 _lastPosition;
         [HideInInspector]
@@ -28,7 +29,17 @@ namespace TarodevController {
         public bool isControlled = true, isKinematic = false, isFrog = false;
         void Awake() => Invoke(nameof(Activate), 0.5f);
         void Activate() =>  _active = true;
-        
+        void Start()
+        {
+            Transform[] children = this.gameObject.transform.GetComponentsInChildren<Transform>();
+            foreach (var child in children)
+            {
+                if (child.name == "Sprite")
+                {
+                    animator = child.GetComponent<Animator>();
+                }
+            }
+        }
         private void Update() {
             if (!_active) return;
             if (isKinematic) return;
@@ -305,6 +316,28 @@ namespace TarodevController {
         private void MoveCharacter() {
             var pos = transform.position;
             RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
+            if (Mathf.Abs(RawMovement.x) > 0.1)
+            {
+                if (this.tag == "Knight")
+                {
+                    animator.SetBool("IsMoving", true);
+                }
+                if (this.tag == "Pick up")
+                {
+                    animator.SetBool("IsFrog", true);
+                }
+            }
+            else
+            {
+                if (this.tag == "Knight")
+                {
+                    animator.SetBool("IsMoving", false);
+                }
+                if (this.tag == "Pick up")
+                {
+                    animator.SetBool("IsFrog", false);
+                }
+            }
             var move = RawMovement * Time.deltaTime;
             var furthestPoint = pos + move;
 
