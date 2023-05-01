@@ -6,8 +6,8 @@ public enum CameraMode { Free, WAverage }
 public class FollowCamera : MonoBehaviour
 {
     public Transform knight, frog;
-    float camWeight = 0f; // 0 = on knight, 1 = on frog, in between is in between :^)
-    float camWeightTarget, camLerpSpeed = 7, minSpeed = 0.001f;
+    float camWeight = 1; // 0 = on knight, 1 = on frog, in between is in between :^)
+    float camWeightTarget = 1, camLerpSpeed = 7, minSpeed = 0.001f;
     CameraMode mode = CameraMode.WAverage;
 
     private void Start()
@@ -46,5 +46,10 @@ public class FollowCamera : MonoBehaviour
     public void SetCameraWeightTarget(float target)
     {
         camWeightTarget = Mathf.Clamp01(target);
+    }
+
+    public void SetCameraWeight(float target)
+    {
+        camWeight = Mathf.Clamp01(target);
     }
 }
