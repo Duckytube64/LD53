@@ -23,7 +23,7 @@ public class ParallaxScrolling : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = new Vector3(cam.position.x, cam.position.y, 0);
+        transform.position = new Vector3(cam.position.x, cam.position.y, 100);
         distance = cam.position.x - camStartPosition.x;
         mat.SetTextureOffset("_MainTex" , new Vector2(distance,0) * speed);
     }
