@@ -19607,7 +19607,7 @@ GameObject:
   - component: {fileID: 7459157211904538318}
   - component: {fileID: 4521903613546374747}
   - component: {fileID: 4521903613546374746}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Frog
   m_TagString: Pick up
   m_Icon: {fileID: 0}
@@ -19718,9 +19718,10 @@ GameObject:
   - component: {fileID: 4495437688536056312}
   - component: {fileID: 4521903612999504894}
   - component: {fileID: 8336194527950048232}
-  m_Layer: 7
+  - component: {fileID: 8072104083238979057}
+  m_Layer: 0
   m_Name: Visual
-  m_TagString: Untagged
+  m_TagString: Frog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19771,7 +19772,6 @@ MonoBehaviour:
   _tiltSpeed: 30
   _maxIdleSpeed: 2
   _maxParticleFallSpeed: -40
-  rotateSpeed: 200
   isFrog: 1
 --- !u!82 &4521903612999504894
 AudioSource:
@@ -19977,3 +19977,19 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!58 &8072104083238979057
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8780941142727589338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6
