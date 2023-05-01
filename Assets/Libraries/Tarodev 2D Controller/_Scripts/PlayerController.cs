@@ -338,6 +338,7 @@ namespace TarodevController {
                     animator.SetBool("IsFrog", false);
                 }
             }
+
             var move = RawMovement * Time.deltaTime;
             var furthestPoint = pos + move;
 
