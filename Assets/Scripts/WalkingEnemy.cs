@@ -36,6 +36,17 @@ public class WalkingEnemy : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        if (col.gameObject.GetComponent<Rigidbody2D>() != null)
+        {
+            Vector3 velocity = col.gameObject.GetComponent<Rigidbody2D>().velocity;
+            float sum = Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y);
+            Debug.Log(sum);
+            Debug.Log(velocity);
+            if (col.gameObject.name == "Frog" && sum > 2f)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
     void FlipSprite()
     {
