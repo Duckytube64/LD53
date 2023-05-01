@@ -1,6 +1,8 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class Intro : MonoBehaviour
 {
@@ -10,8 +12,12 @@ public class Intro : MonoBehaviour
     private Texture2D _texture;
     private bool _done;
     private float _time;
-
+    private Animator animator;
+    [SerializeField]
+    GameObject frogger;
+    Transform frogT;
     GameObject main;
+
     string[] texts = new string[] { "My name is Prince Jonathoad, \nand I have turned into a frog!",
                                     "I can only roll around and can't \neven leave this pond...", 
                                     "Can you take me to the princess?\nShe can turn me back!",
@@ -25,6 +31,16 @@ public class Intro : MonoBehaviour
     private void Start()
     {
         main = GameObject.Find("Main");
+        frogT = frogger.transform;
+        Transform[] children = frogT.GetComponentsInChildren<Transform>();
+        foreach (var child in children)
+        {
+            if (child.name == "Sprite")
+            {
+                animator = child.GetComponent<Animator>();
+            }
+        }
+        animator.SetBool("IsTalking", true);
     }
 
     bool introDone = false;
@@ -54,6 +70,7 @@ public class Intro : MonoBehaviour
             transform.Find("Textbox").gameObject.SetActive(false);
             GetComponent<Camera>().orthographicSize = 8;
             enabled = false;
+            animator.SetBool("IsTalking", false);
         }
     }
 

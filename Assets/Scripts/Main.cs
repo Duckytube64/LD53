@@ -2,7 +2,7 @@ using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Unity.Burst.Intrinsics.X86.Avx;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public struct HasItem
 {
@@ -24,6 +24,7 @@ public class Main : MonoBehaviour
     public float throwForce = 50;
     bool thrown = false;
     TrailRenderer trail;
+    private Animator animator;
 
     void Start()
     {
@@ -38,10 +39,26 @@ public class Main : MonoBehaviour
 
         trail = frogT.Find("Visual").GetComponent<TrailRenderer>();
         trail.enabled = false;
+        Transform[] children = frogT.GetComponentsInChildren<Transform>();
+        foreach (var child in children)
+        {
+            if (child.name == "Sprite")
+            {
+                animator = child.GetComponent<Animator>();
+            }
+        }
     }
 
     void Update()
     {
+        if (Mathf.Abs(frogR.velocity.y) > 1)
+        {
+            animator.SetBool("IsFrog", true);
+        }
+        else
+        {
+            animator.SetBool("IsFrog", false);
+        }
         if (Input.GetKey("escape"))
         {
             Application.Quit();
@@ -235,6 +252,7 @@ public class Main : MonoBehaviour
 
             thrown = true;
             trail.enabled = true;
+            animator.SetBool("IsFrog", true);
         }
     }
 }
