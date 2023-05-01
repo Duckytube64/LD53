@@ -25,7 +25,7 @@ namespace TarodevController {
         private Vector2 _movement;
 
         void Awake() => _player = GetComponentInParent<IPlayerController>();
-        [SerializeField] float rotateSpeed = 200;
+        float rotateSpeed = 25;
         [SerializeField] bool isFrog = false;
         void Update() {
             if (_player == null) return;
@@ -35,7 +35,8 @@ namespace TarodevController {
 
             if (isFrog)
             {
-                Vector3 extraRotate = _player.Input.X * -rotateSpeed * new Vector3(0, 0, Time.deltaTime);
+                float frogSpeed = transform.parent.GetComponent<PlayerController>()._currentHorizontalSpeed;
+                Vector3 extraRotate = frogSpeed * -rotateSpeed * new Vector3(0, 0, Time.deltaTime);
                 Vector3 newRotation = _anim.transform.rotation.eulerAngles + extraRotate;
                 _anim.transform.parent.transform.rotation = Quaternion.Euler(newRotation);
             }
