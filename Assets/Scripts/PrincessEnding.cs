@@ -6,19 +6,7 @@ using UnityEngine.SceneManagement;
 public class PrincessEnding : MonoBehaviour
 {
 
-    public GameObject prince, frog, text;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public GameObject prince, text;
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -26,7 +14,7 @@ public class PrincessEnding : MonoBehaviour
         {
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             prince.GetComponent<SpriteRenderer>().enabled = true;
-            Destroy(frog);
+            Destroy(col.gameObject);
             text.GetComponent<Canvas>().enabled = true;
         }
     }

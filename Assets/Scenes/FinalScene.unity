@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 350}
+  m_AnchoredPosition: {x: -259, y: 145}
   m_SizeDelta: {x: 600, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &44032130
@@ -73022,7 +73022,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prince: {fileID: 1939517774}
-  frog: {fileID: 207035705}
   text: {fileID: 130664262}
 --- !u!61 &1796506176
 BoxCollider2D:
