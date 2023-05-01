@@ -10,6 +10,7 @@ public class WalkingEnemy : MonoBehaviour
     float last_direction_change = 0;
     Collider2D wall_detector;
     public Collider2D wall1, wall2;
+    public bool bounce = false;
 
     void Start()
     {
@@ -32,11 +33,12 @@ public class WalkingEnemy : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Knight"))
+        if (col.gameObject.CompareTag("Knight") && bounce == false)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
+
     void FlipSprite()
     {
         if (speed < 0)

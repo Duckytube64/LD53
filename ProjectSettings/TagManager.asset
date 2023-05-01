@@ -9,6 +9,7 @@ TagManager:
   - Pick up
   - Bounce
   - Bounce enemy
+  - Frog
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Obstacle
   - Enemy walls
   - Enemy
-  - 
+  - Ignore enemies
   - 
   - 
   - 

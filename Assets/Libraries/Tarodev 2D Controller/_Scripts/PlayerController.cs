@@ -129,7 +129,7 @@ namespace TarodevController {
                     {
                         if (hit.collider.CompareTag("Bounce"))
                         {
-                            _currentVerticalSpeed = 40;
+                            _currentVerticalSpeed = 60;
                             _endedJumpEarly = true;
                         }
                         else
@@ -147,7 +147,7 @@ namespace TarodevController {
                 {
                     Rigidbody2D r = GetComponent<Rigidbody2D>();
                     Vector2 v = r.velocity;
-                    v.y = Mathf.Max(Mathf.Abs(v.y), 15);
+                    v.y = Mathf.Max(Mathf.Abs(v.y), 25);
                     v.x *= 1.2f;
                     r.velocity = v;
                 }

@@ -1,8 +1,9 @@
+using TarodevController;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static Unity.Burst.Intrinsics.X86.Avx;
+using UnityEngine.Diagnostics;
+
 
 public class Intro : MonoBehaviour
 {
@@ -65,7 +66,8 @@ public class Intro : MonoBehaviour
             GetComponent<FollowCamera>().SetCameraWeightTarget(0);
             Vector3 kpos = GameObject.Find("Knight").transform.position;
             kpos.z = -10;
-            transform.position = kpos; 
+            transform.position = kpos;
+            GameObject.Find("Knight").GetComponent<PlayerController>().isControlled = true;
             main.GetComponent<Main>().enabled = true;
             transform.Find("Textbox").gameObject.SetActive(false);
             GetComponent<Camera>().orthographicSize = 8;
