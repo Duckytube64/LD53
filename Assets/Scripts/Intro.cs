@@ -15,6 +15,8 @@ public class Intro : MonoBehaviour
     string[] texts = new string[] { "My name is Prince Jonathoad, \nand I have turned into a frog!",
                                     "I can only roll around and can't \neven leave this pond...", 
                                     "Can you take me to the princess?\nShe can turn me back!",
+                                    "Pick me up with F and \ncontrol me with Q",
+                                    "Be careful but you can throw me \nwith your mouse ",
                                     "Bruh", "On my day off too..."};
     int textIndex = 0;
     [SerializeField] TMP_Text tmp;
@@ -36,7 +38,7 @@ public class Intro : MonoBehaviour
                 tmp.text = texts[textIndex];
                 textIndex++;
                 // Move camera to knight
-                if (textIndex == 4)
+                if (textIndex == 6)
                     GetComponent<FollowCamera>().SetCameraWeightTarget(0);
             }
         }
