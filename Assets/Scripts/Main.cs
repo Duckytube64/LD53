@@ -2,6 +2,7 @@ using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Unity.Burst.Intrinsics.X86.Avx;
+using UnityEngine.SceneManagement;
 
 public struct HasItem
 {
@@ -60,7 +61,12 @@ public class Main : MonoBehaviour
         ref HasItem hi = ref knightI;
         if (frogCon.isControlled) hi = ref frogI;
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+            if (Input.GetKeyDown(KeyCode.F))
         {
             if (knightCon.isControlled && hi.holdsItem && knightI.heldItem.name == "Frog")
                 DropFrog();

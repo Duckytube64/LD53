@@ -16,6 +16,7 @@ public class Intro : MonoBehaviour
                                     "I can only roll around and can't \neven leave this pond...", 
                                     "Can you take me to the princess?\nShe can turn me back!",
                                     "Pick me up with F and \ncontrol me with Q",
+                                    "For restarting the level \njust press R and esc to quit",
                                     "Be careful but you can throw me \nwith your mouse ",
                                     "Bruh", "On my day off too..."};
     int textIndex = 0;
@@ -38,7 +39,7 @@ public class Intro : MonoBehaviour
                 tmp.text = texts[textIndex];
                 textIndex++;
                 // Move camera to knight
-                if (textIndex == 6)
+                if (textIndex == 7)
                     GetComponent<FollowCamera>().SetCameraWeightTarget(0);
             }
         }
