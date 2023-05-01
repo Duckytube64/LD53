@@ -117,7 +117,10 @@ namespace TarodevController {
                     if (hit.collider)
                     {
                         if (hit.collider.CompareTag("Bounce"))
-                            _currentVerticalSpeed = Mathf.Max(_currentVerticalSpeed * -1, tmp);
+                        {
+                            _currentVerticalSpeed = 40;
+                            _endedJumpEarly = true;
+                        }
                         else
                             return true;
                     }
@@ -125,7 +128,20 @@ namespace TarodevController {
                 return false;
             }
         }
-        public float tmp = 35;
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (isFrog)
+                if (collision.collider.CompareTag("Bounce"))
+                {
+                    Rigidbody2D r = GetComponent<Rigidbody2D>();
+                    Vector2 v = r.velocity;
+                    v.y = Mathf.Max(Mathf.Abs(v.y), 15);
+                    v.x *= 1.2f;
+                    r.velocity = v;
+                }
+        }
+
         private void CalculateRayRanged() {
             // This is crying out for some kind of refactor. 
             var b = new Bounds(transform.position, _characterBounds.size);
