@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PrincessEnding : MonoBehaviour
 {
+
+    public GameObject prince, frog, text;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,10 @@ public class PrincessEnding : MonoBehaviour
     {
         if (col.gameObject.name == "Frog")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            prince.GetComponent<SpriteRenderer>().enabled = true;
+            Destroy(frog);
+            text.GetComponent<Canvas>().enabled = true;
         }
     }
 }
